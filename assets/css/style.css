@@ -1,0 +1,49 @@
+body {
+  background-color: cornsilk;
+  padding: 10px;
+}
+
+h1 {
+  padding: 10px;
+  margin: 0 auto;
+  font-weight: 900;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.dados-pessoais {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#dados {
+  margin-left: 30px;
+  list-style-type: disc;
+}
+
+img {
+  width: 30%;
+  height: auto;
+}
+.icon {
+  width: 20px;
+  height: auto;
+}
+
+table,
+tr,
+td,
+th {
+  padding: 5px;
+  border: 1px solid gray;
+}
+
+th {
+  background-color: #ddd;
+}
+
+.contatos {
+  padding: 10px;
+}
