@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trabalho Pratico - Monitoramento de Cores</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <h1>Paleta de cores</h1>
+    <form>
+      <ul>
+        <li>
+          <span class="titleLine">(R) Vermelho</span>
+          <input
+            type="range"
+            min="0"
+            max="255"
+            id="inputRed"
+            class="inputRange"
+            value="0"
+          />
+          <input type="text" id="inputRedNumerico" value="0" disabled />
+        </li>
+        <li>
+          <span class="titleLine">(G) Verde</span
+          ><input
+            type="range"
+            min="0"
+            max="255"
+            id="inputGreen"
+            class="inputRange"
+            value="0"
+          />
+          <input type="text" id="inputGreenNumerico" value="0" disabled />
+        </li>
+        <li>
+          <span class="titleLine">((B) Azul</span>
+          <input
+            type="range"
+            min="0"
+            max="255"
+            id="inputBlue"
+            class="inputRange"
+            value="0"
+          />
+          <input type="text" id="inputBlueNumerico" value="0" disabled />
+        </li>
+      </ul>
+    </form>
+    <div id="colorResult"></div>
+    <script src="./js/podcasts.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
