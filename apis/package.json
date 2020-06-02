@@ -2,7 +2,7 @@
   "name": "grades-control-api",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app2.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
   },
@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/pedromcf/igti#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "winston": "^3.2.1"
   },
   "type": "module"
 }

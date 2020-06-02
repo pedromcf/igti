@@ -1,7 +1,38 @@
 import express from 'express';
+import winston from 'winston';
+
+//comando de inicialização
+//nodemon --experimental-modules .\src\app.js
 
 const app = express();
 const port = 3000;
+
+const { combine, timestamp, label, printf } = winston.format;
+
+const myFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level}: ${message}`;
+});
+
+const logger = winston.createLogger({
+  level: 'silly',
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'grades-control-api.log' }),
+  ],
+  format: combine(
+    label({ label: 'grades-control-api' }),
+    timestamp(),
+    myFormat
+  ),
+});
+
+logger.error('Error log');
+logger.warn('Warn log');
+logger.info('Info log');
+logger.verbose('Verbose log');
+logger.debug('Debug log');
+logger.silly('Silly log');
+logger.log('info', 'Hello with parameter!');
 
 app.get('/', (req, res) => res.send('Olá, Mundo!'));
 app.post('/', (req, res) => res.send('Olá, Mundo Post!'));
@@ -75,6 +106,24 @@ app.use('/testMiddleware', (req, res, next) => {
 app.get('/testMiddleware', (req, res) => {
   console.log(req);
   res.send('GET /testMiddleware');
+});
+
+app.post('/testError', async (req, res, next) => {
+  try {
+    throw new Error('Error message');
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.use(function (err, req, res, next) {
+  console.log('Error 1');
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  console.log('Error 2');
+  res.status(500).send('An error ocurred!');
 });
 
 app.listen(port, () => {
