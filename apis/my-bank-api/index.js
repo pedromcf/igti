@@ -1,51 +1,13 @@
 import express from 'express';
 import fs from 'fs';
+import { accountRoute } from './routes/accounts.js';
+
+global.fileName = './data/accounts.json';
 
 const app = express();
 
 app.use(express.json());
-// app.get('/', (req, res) => {
-//   res.send('ola');
-// });
-
-app.post('/account', (req, res) => {
-  let account = req.body;
-
-  fs.readFile('./data/accounts.json', 'utf8', (err, data) => {
-    if (!err) {
-      try {
-        const json = JSON.parse(data);
-        account = { id: json.nextId++, ...account };
-        json.accounts.push(account);
-
-        fs.writeFile('./data/accounts.json', JSON.stringify(json), (err) => {
-          if (err) {
-            res.status(400).send({ error: err.message });
-          } else {
-            res.send('Conta cadastrada!');
-          }
-        });
-      } catch (err) {
-        console.log(err);
-        res.status(400).send({ error: err.message });
-      }
-    } else {
-      res.status(400).send({ error: err.message });
-    }
-  });
-});
-
-app.get('/account', (_, res) => {
-  fs.readFile('./data/accounts.json', 'utf8', (err, data) => {
-    if (err) {
-      res.status(400).send({ error: err.message });
-    } else {
-      const result = JSON.parse(data);
-      delete result.nextId;
-      res.send(result);
-    }
-  });
-});
+app.use('/account', accountRoute);
 
 app.listen(3000, function () {
   createdFile();
@@ -54,19 +16,15 @@ app.listen(3000, function () {
 
 function createdFile() {
   try {
-    fs.readFile('./data/accounts.json', 'utf8', (err, data) => {
+    fs.readFile(global.fileName, 'utf8', (err, data) => {
       if (err) {
         const initialJson = {
           nextId: 1,
           accounts: [],
         };
-        fs.writeFile(
-          './data/accounts.json',
-          JSON.stringify(initialJson),
-          (err) => {
-            console.log(err);
-          }
-        );
+        fs.writeFile(global.fileName, JSON.stringify(initialJson), (err) => {
+          console.log(err);
+        });
       }
     });
   } catch (err) {
