@@ -43,7 +43,7 @@ router.get('/', (_, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
 
   fs.readFile(global.fileName, 'utf8', (err, data) => {
     if (err) {
@@ -51,9 +51,13 @@ router.get('/:id', (req, res) => {
     } else {
       const result = JSON.parse(data);
       const getUserId = result.accounts.find((account) => {
-        return account.id == id;
+        return account.id === id;
       });
-      res.send(getUserId);
+      if (getUserId) {
+        res.send(getUserId);
+      } else {
+        res.status(400).send('Conta não encontrada!');
+      }
     }
   });
 });
