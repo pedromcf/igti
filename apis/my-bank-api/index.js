@@ -35,6 +35,18 @@ app.post('/account', (req, res) => {
   });
 });
 
+app.get('/account', (_, res) => {
+  fs.readFile('./data/accounts.json', 'utf8', (err, data) => {
+    if (err) {
+      res.status(400).send({ error: err.message });
+    } else {
+      const result = JSON.parse(data);
+      delete result.nextId;
+      res.send(result);
+    }
+  });
+});
+
 app.listen(3000, function () {
   createdFile();
   console.log('Api Started!');
